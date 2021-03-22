@@ -17,7 +17,7 @@ import '../../../../common/date_time_factory.dart' show DateTimeFactory;
 import 'base_time_stepper.dart';
 
 class MillisecondTimeStepper extends BaseTimeStepper{
-  static const _defaultIncrements = [5, 10, 15, 20, 30];
+  static const _defaultIncrements = [1, 5, 10, 15, 20, 30, 50, 100, 200, 500];
 
   final List<int> _allowedTickIncrements;
 
