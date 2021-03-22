@@ -285,6 +285,8 @@ class BasicDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
 /// level.
 @immutable
 class AutoDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
+  final TimeFormatterSpec milliSecond;
+  final TimeFormatterSpec second;
   final TimeFormatterSpec minute;
   final TimeFormatterSpec hour;
   final TimeFormatterSpec day;
@@ -298,11 +300,21 @@ class AutoDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
   /// by specifying a level here it replaces the default for that particular
   /// granularity. This is useful for swapping out one or all of the formatters.
   const AutoDateTimeTickFormatterSpec(
-      {this.minute, this.hour, this.day, this.month, this.year});
+      {this.milliSecond, this.second, this.minute, this.hour, this.day, this.month, this.year});
 
   @override
   DateTimeTickFormatter createTickFormatter(ChartContext context) {
     final Map<int, TimeTickFormatter> map = {};
+
+    if (second != null) {
+      map[1] =
+          _makeFormatter(milliSecond, CalendarField.second, context);
+    }
+
+    if (second != null) {
+      map[DateTimeTickFormatter.SECOND] =
+          _makeFormatter(second, CalendarField.minute, context);
+    }
 
     if (minute != null) {
       map[DateTimeTickFormatter.MINUTE] =

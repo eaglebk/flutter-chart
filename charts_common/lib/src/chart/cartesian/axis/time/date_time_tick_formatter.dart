@@ -56,6 +56,16 @@ class DateTimeTickFormatter implements TickFormatter<DateTime> {
   factory DateTimeTickFormatter(DateTimeFactory dateTimeFactory,
       {Map<int, TimeTickFormatter> overrides}) {
     final Map<int, TimeTickFormatter> map = {
+      1: TimeTickFormatterImpl(
+          dateTimeFactory: dateTimeFactory,
+          simpleFormat: 'S',
+          transitionFormat: 'ss S',
+          transitionField: CalendarField.second),
+      SECOND: TimeTickFormatterImpl(
+          dateTimeFactory: dateTimeFactory,
+          simpleFormat: 'ss',
+          transitionFormat: 'mm ss',
+          transitionField: CalendarField.minute),
       MINUTE: TimeTickFormatterImpl(
           dateTimeFactory: dateTimeFactory,
           simpleFormat: 'mm',
