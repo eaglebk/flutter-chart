@@ -27,6 +27,8 @@ import 'date_time_scale.dart' show DateTimeScale;
 import 'day_time_stepper.dart' show DayTimeStepper;
 import 'hour_time_stepper.dart' show HourTimeStepper;
 import 'minute_time_stepper.dart' show MinuteTimeStepper;
+import 'second_time_stepper.dart' show SecondTimeStepper;
+import 'millisecond_time_stepper.dart' show MillisecondTimeStepper;
 import 'month_time_stepper.dart' show MonthTimeStepper;
 import 'time_range_tick_provider.dart' show TimeRangeTickProvider;
 import 'time_range_tick_provider_impl.dart' show TimeRangeTickProviderImpl;
@@ -59,7 +61,9 @@ class AutoAdjustingDateTimeTickProvider implements TickProvider<DateTime> {
       createMonthTickProvider(dateTimeFactory),
       createDayTickProvider(dateTimeFactory),
       createHourTickProvider(dateTimeFactory),
-      createMinuteTickProvider(dateTimeFactory)
+      createMinuteTickProvider(dateTimeFactory),
+      createSecondTickProvider(dateTimeFactory),
+      createMillisecondTickProvider(dateTimeFactory)
     ]);
   }
 
@@ -171,6 +175,14 @@ class AutoAdjustingDateTimeTickProvider implements TickProvider<DateTime> {
       TimeRangeTickProviderImpl(HourTimeStepper(dateTimeFactory));
 
   static TimeRangeTickProvider createMinuteTickProvider(
-          DateTimeFactory dateTimeFactory) =>
+      DateTimeFactory dateTimeFactory) =>
       TimeRangeTickProviderImpl(MinuteTimeStepper(dateTimeFactory));
+
+  static TimeRangeTickProvider createSecondTickProvider(
+      DateTimeFactory dateTimeFactory) =>
+      TimeRangeTickProviderImpl(SecondTimeStepper(dateTimeFactory));
+
+  static TimeRangeTickProvider createMillisecondTickProvider(
+      DateTimeFactory dateTimeFactory) =>
+      TimeRangeTickProviderImpl(MillisecondTimeStepper(dateTimeFactory));
 }
