@@ -306,7 +306,7 @@ class AutoDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
   DateTimeTickFormatter createTickFormatter(ChartContext context) {
     final Map<int, TimeTickFormatter> map = {};
 
-    if (second != null) {
+    if (milliSecond != null) {
       map[1] =
           _makeFormatter(milliSecond, CalendarField.second, context);
     }
