@@ -175,7 +175,7 @@ class DayTickProviderSpec implements DateTimeTickProviderSpec {
 class HourTickProviderSpec implements DateTimeTickProviderSpec{
   final List<int> increments;
 
-  const HourTickProviderSpec(this.increments);
+  const HourTickProviderSpec({this.increments});
 
   /// Creates a [TickProviderSpec] that dynamically chooses ticks based on the
   /// extents of the data, limited to day increments.
@@ -202,7 +202,7 @@ class HourTickProviderSpec implements DateTimeTickProviderSpec{
 class MinuteTickProviderSpec implements DateTimeTickProviderSpec{
   final List<int> increments;
 
-  const MinuteTickProviderSpec(this.increments);
+  const MinuteTickProviderSpec({this.increments});
 
   /// Creates a [TickProviderSpec] that dynamically chooses ticks based on the
   /// extents of the data, limited to day increments.
@@ -229,7 +229,7 @@ class MinuteTickProviderSpec implements DateTimeTickProviderSpec{
 class SecondTickProviderSpec implements DateTimeTickProviderSpec{
   final List<int> increments;
 
-  const SecondTickProviderSpec(this.increments);
+  const SecondTickProviderSpec({this.increments});
 
   /// Creates a [TickProviderSpec] that dynamically chooses ticks based on the
   /// extents of the data, limited to day increments.
@@ -256,7 +256,7 @@ class SecondTickProviderSpec implements DateTimeTickProviderSpec{
 class MillisecondTickProviderSpec implements DateTimeTickProviderSpec{
   final List<int> increments;
 
-  const MillisecondTickProviderSpec(this.increments);
+  const MillisecondTickProviderSpec({this.increments});
 
   /// Creates a [TickProviderSpec] that dynamically chooses ticks based on the
   /// extents of the data, limited to day increments.
