@@ -21,8 +21,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
 class SimplePrecisionTimeSeriesChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
-  final bool animate;
+  final List<charts.Series<dynamic, DateTime>> seriesList;
+  final bool? animate;
 
   SimplePrecisionTimeSeriesChart(this.seriesList, {this.animate});
 
@@ -48,12 +48,18 @@ class SimplePrecisionTimeSeriesChart extends StatelessWidget {
     final random = new Random();
 
     final data = [
-      new TimeSeriesSales(new DateTime(2021, 3, 22, 15, 40, 0, 0, 0), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2021, 3, 22, 15, 40, 0, 1, 0), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2021, 3, 22, 15, 40, 0, 2, 0), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2021, 3, 22, 15, 40, 0, 3, 0), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2021, 3, 22, 15, 40, 0, 4, 0), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2021, 3, 22, 15, 40, 0, 5, 0), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2021, 3, 22, 15, 40, 0, 0, 0), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2021, 3, 22, 15, 40, 0, 1, 0), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2021, 3, 22, 15, 40, 0, 2, 0), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2021, 3, 22, 15, 40, 0, 3, 0), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2021, 3, 22, 15, 40, 0, 4, 0), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2021, 3, 22, 15, 40, 0, 5, 0), random.nextInt(100)),
     ];
 
     return [

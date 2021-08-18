@@ -17,7 +17,7 @@ import '../../../../../common.dart';
 import '../../../../common/date_time_factory.dart' show DateTimeFactory;
 import 'base_time_stepper.dart';
 
-class SecondTimeStepper extends BaseTimeStepper{
+class SecondTimeStepper extends BaseTimeStepper {
   static const _defaultIncrements = [1, 5, 10, 15, 20, 30];
   static const _millisecondsInSecond = 1000;
 
@@ -29,7 +29,7 @@ class SecondTimeStepper extends BaseTimeStepper{
         super(dateTimeFactory);
 
   factory SecondTimeStepper(DateTimeFactory dateTimeFactory,
-      {List<int> allowedTickIncrements}) {
+      {List<int>? allowedTickIncrements}) {
     // Set the default increments if null.
     allowedTickIncrements ??= _defaultIncrements;
 
@@ -37,7 +37,7 @@ class SecondTimeStepper extends BaseTimeStepper{
     assert(allowedTickIncrements.isNotEmpty);
     // Increment must be between 1 and 60 inclusive.
     assert(allowedTickIncrements
-        .any((increment) => increment <= 0 || increment > 60) ==
+            .any((increment) => increment <= 0 || increment > 60) ==
         false);
 
     return SecondTimeStepper._internal(dateTimeFactory, allowedTickIncrements);
@@ -60,8 +60,9 @@ class SecondTimeStepper extends BaseTimeStepper{
         (60 - time.second) * _millisecondsInSecond;
 
     final secondsToNextMinute =
-    ((nextMinuteStart - time.millisecondsSinceEpoch) / _millisecondsInSecond)
-        .ceil();
+        ((nextMinuteStart - time.millisecondsSinceEpoch) /
+                _millisecondsInSecond)
+            .ceil();
 
     final secRemainder = secondsToNextMinute % tickIncrement;
     final rewindSeconds = secRemainder == 0 ? 0 : tickIncrement - secRemainder;
@@ -70,6 +71,4 @@ class SecondTimeStepper extends BaseTimeStepper{
         time.millisecondsSinceEpoch - rewindSeconds * _millisecondsInSecond);
     return stepBefore;
   }
-
-
 }

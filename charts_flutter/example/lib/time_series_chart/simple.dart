@@ -48,10 +48,24 @@ class SimpleTimeSeriesChart extends StatelessWidget {
     final random = new Random();
 
     final data = [
-      new TimeSeriesSales(new DateTime(2017, 9, 19), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2017, 9, 26), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2017, 10, 3), random.nextInt(100)),
-      new TimeSeriesSales(new DateTime(2017, 10, 10), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2017, 9, 19, 0, 0, 1), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2017, 9, 19, 0, 0, 2), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2017, 9, 19, 0, 0, 3), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2017, 9, 19, 0, 0, 4), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2017, 9, 19, 0, 0, 5), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2017, 9, 19, 0, 0, 6), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2017, 9, 19, 0, 0, 7), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2017, 9, 19, 0, 0, 8), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2017, 9, 19, 0, 0, 9), random.nextInt(100)),
     ];
 
     return [
@@ -68,23 +82,36 @@ class SimpleTimeSeriesChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final staticTicks = <charts.TickSpec<DateTime>>[
+    //   new charts.TickSpec(new DateTime(2017, 9, 19)),
+    // ];
     return new charts.TimeSeriesChart(
       seriesList,
       animate: animate,
+      domainAxis: new charts.DateTimeAxisSpec(
+          tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
+              day: new charts.TimeFormatterSpec(
+                  format: 's', transitionFormat: 'ms'))),
       // Optionally pass in a [DateTimeFactory] used by the chart. The factory
       // should create the same type of [DateTime] as the data provided. If none
       // specified, the default creates local date time.
       dateTimeFactory: const charts.LocalDateTimeFactory(),
+      behaviors: [charts.PanAndZoomBehavior()],
     );
   }
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final data = [
-      new TimeSeriesSales(new DateTime(2017, 9, 19), 5),
-      new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
-      new TimeSeriesSales(new DateTime(2017, 10, 3), 100),
-      new TimeSeriesSales(new DateTime(2017, 10, 10), 75),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 1), 5),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 2), 10),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 3), 5),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 4), 20),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 5), 10),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 6), 20),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 7), 30),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 8), 50),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 9), 3),
     ];
 
     return [

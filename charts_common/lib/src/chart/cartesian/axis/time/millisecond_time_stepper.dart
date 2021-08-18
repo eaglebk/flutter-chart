@@ -16,11 +16,10 @@
 import '../../../../common/date_time_factory.dart' show DateTimeFactory;
 import 'base_time_stepper.dart';
 
-class MillisecondTimeStepper extends BaseTimeStepper{
+class MillisecondTimeStepper extends BaseTimeStepper {
   static const _defaultIncrements = [1, 5, 10, 15, 20, 30, 50, 100, 200, 500];
 
   final List<int> _allowedTickIncrements;
-
 
   MillisecondTimeStepper._internal(
       DateTimeFactory dateTimeFactory, List<int> increments)
@@ -28,7 +27,7 @@ class MillisecondTimeStepper extends BaseTimeStepper{
         super(dateTimeFactory);
 
   factory MillisecondTimeStepper(DateTimeFactory dateTimeFactory,
-      {List<int> allowedTickIncrements}) {
+      {List<int>? allowedTickIncrements}) {
     // Set the default increments if null.
     allowedTickIncrements ??= _defaultIncrements;
 
@@ -36,10 +35,11 @@ class MillisecondTimeStepper extends BaseTimeStepper{
     assert(allowedTickIncrements.isNotEmpty);
     // Increment must be between 1 and 1000 inclusive.
     assert(allowedTickIncrements
-        .any((increment) => increment <= 0 || increment > 1000) ==
+            .any((increment) => increment <= 0 || increment > 1000) ==
         false);
 
-    return MillisecondTimeStepper._internal(dateTimeFactory, allowedTickIncrements);
+    return MillisecondTimeStepper._internal(
+        dateTimeFactory, allowedTickIncrements);
   }
 
   @override
@@ -55,21 +55,19 @@ class MillisecondTimeStepper extends BaseTimeStepper{
 
   @override
   DateTime getStepTimeBeforeInclusive(DateTime time, int tickIncrement) {
-    final nextSecondStart = time.millisecondsSinceEpoch +
-        (60 - time.millisecond);
+    final nextSecondStart =
+        time.millisecondsSinceEpoch + (60 - time.millisecond);
 
     final msToNextSecond =
-    ((nextSecondStart - time.millisecondsSinceEpoch))
-        .ceil();
+        ((nextSecondStart - time.millisecondsSinceEpoch)).ceil();
 
     final msRemainder = msToNextSecond % tickIncrement;
-    final rewindMilliseconds = msRemainder == 0 ? 0 : tickIncrement - msRemainder;
+    final rewindMilliseconds =
+        msRemainder == 0 ? 0 : tickIncrement - msRemainder;
 
     final stepBefore = dateTimeFactory.createDateTimeFromMilliSecondsSinceEpoch(
         time.millisecondsSinceEpoch - rewindMilliseconds);
 
     return stepBefore;
   }
-
-
 }

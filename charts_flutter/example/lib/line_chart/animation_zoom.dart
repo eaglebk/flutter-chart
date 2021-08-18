@@ -50,7 +50,7 @@ class LineAnimationZoomChart extends StatelessWidget {
 
     final data = <LinearSales>[];
 
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < 50; i++) {
       data.add(new LinearSales(i, random.nextInt(100)));
     }
 
@@ -67,9 +67,15 @@ class LineAnimationZoomChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList, animate: animate, behaviors: [
-      new charts.PanAndZoomBehavior(),
-    ]);
+    return new charts.LineChart(
+      seriesList,
+      animate: animate,
+      defaultRenderer: charts.LineRendererConfig(),
+      behaviors: [
+        new charts.SlidingViewport(),
+        new charts.PanAndZoomBehavior(),
+      ],
+    );
   }
 
   /// Create one series with sample hard coded data.
@@ -77,6 +83,10 @@ class LineAnimationZoomChart extends StatelessWidget {
     final data = [
       new LinearSales(0, 5),
       new LinearSales(1, 25),
+      new LinearSales(2, 100),
+      new LinearSales(2, 100),
+      new LinearSales(2, 100),
+      new LinearSales(2, 100),
       new LinearSales(2, 100),
       new LinearSales(3, 75),
     ];
