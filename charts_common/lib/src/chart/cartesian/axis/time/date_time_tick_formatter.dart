@@ -53,7 +53,17 @@ class DateTimeTickFormatter implements TickFormatter<DateTime> {
   /// [TickFormatter].
   factory DateTimeTickFormatter(DateTimeFactory dateTimeFactory,
       {Map<int, TimeTickFormatter>? overrides}) {
-    final map = <int, TimeTickFormatter>{
+    final Map<int, TimeTickFormatter> map = {
+      1: TimeTickFormatterImpl(
+          dateTimeFactory: dateTimeFactory,
+          simpleFormat: 'S',
+          transitionFormat: 'ss S',
+          transitionField: CalendarField.second),
+      SECOND: TimeTickFormatterImpl(
+          dateTimeFactory: dateTimeFactory,
+          simpleFormat: 'ss',
+          transitionFormat: 'mm ss',
+          transitionField: CalendarField.minute),
       MINUTE: TimeTickFormatterImpl(
           dateTimeFactory: dateTimeFactory,
           simpleFormat: 'mm',
@@ -124,7 +134,7 @@ class DateTimeTickFormatter implements TickFormatter<DateTime> {
   ///
   /// The formatters are expected to be provided with keys in increasing order.
   factory DateTimeTickFormatter.withFormatters(
-      Map<int, TimeTickFormatter> formatters) {
+      Map<int, TimeTickFormatter>? formatters) {
     // Formatters must be non empty.
     if (formatters == null || formatters.isEmpty) {
       throw ArgumentError('At least one TimeTickFormatter is required.');

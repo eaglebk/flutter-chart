@@ -13,6 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:charts_common/src/chart/cartesian/axis/tick_provider.dart';
+import 'package:charts_common/src/chart/cartesian/axis/time/hour_time_stepper.dart';
+import 'package:charts_common/src/chart/cartesian/axis/time/millisecond_time_stepper.dart';
+import 'package:charts_common/src/chart/cartesian/axis/time/minute_time_stepper.dart';
+import 'package:charts_common/src/chart/cartesian/axis/time/second_time_stepper.dart';
 import 'package:meta/meta.dart' show immutable;
 import 'package:intl/intl.dart' show DateFormat;
 
@@ -167,6 +172,114 @@ class DayTickProviderSpec implements DateTimeTickProviderSpec {
   int get hashCode => increments.hashCode;
 }
 
+@immutable
+class HourTickProviderSpec implements DateTimeTickProviderSpec {
+  final List<int>? increments;
+
+  const HourTickProviderSpec({this.increments});
+
+  /// Creates a [TickProviderSpec] that dynamically chooses ticks based on the
+  /// extents of the data, limited to day increments.
+  ///
+  /// [increments] specify the number of hour increments that can be chosen from
+  /// when searching for the appropriate tick intervals.
+  @override
+  TickProvider<DateTime> createTickProvider(ChartContext context) {
+    return AutoAdjustingDateTimeTickProvider.createWith([
+      TimeRangeTickProviderImpl(HourTimeStepper(context.dateTimeFactory,
+          allowedTickIncrements: increments))
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      other is DayTickProviderSpec && increments == other.increments;
+
+  @override
+  int get hashCode => increments?.hashCode ?? 0;
+}
+
+@immutable
+class MinuteTickProviderSpec implements DateTimeTickProviderSpec {
+  final List<int>? increments;
+
+  const MinuteTickProviderSpec({this.increments});
+
+  /// Creates a [TickProviderSpec] that dynamically chooses ticks based on the
+  /// extents of the data, limited to day increments.
+  ///
+  /// [increments] specify the number of minute increments that can be chosen from
+  /// when searching for the appropriate tick intervals.
+  @override
+  TickProvider<DateTime> createTickProvider(ChartContext context) {
+    return AutoAdjustingDateTimeTickProvider.createWith([
+      TimeRangeTickProviderImpl(MinuteTimeStepper(context.dateTimeFactory,
+          allowedTickIncrements: increments))
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      other is DayTickProviderSpec && increments == other.increments;
+
+  @override
+  int get hashCode => increments?.hashCode ?? 0;
+}
+
+@immutable
+class SecondTickProviderSpec implements DateTimeTickProviderSpec {
+  final List<int>? increments;
+
+  const SecondTickProviderSpec({this.increments});
+
+  /// Creates a [TickProviderSpec] that dynamically chooses ticks based on the
+  /// extents of the data, limited to day increments.
+  ///
+  /// [increments] specify the number of second increments that can be chosen from
+  /// when searching for the appropriate tick intervals.
+  @override
+  TickProvider<DateTime> createTickProvider(ChartContext context) {
+    return AutoAdjustingDateTimeTickProvider.createWith([
+      TimeRangeTickProviderImpl(SecondTimeStepper(context.dateTimeFactory,
+          allowedTickIncrements: increments))
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      other is DayTickProviderSpec && increments == other.increments;
+
+  @override
+  int get hashCode => increments?.hashCode ?? 0;
+}
+
+@immutable
+class MillisecondTickProviderSpec implements DateTimeTickProviderSpec {
+  final List<int>? increments;
+
+  const MillisecondTickProviderSpec({this.increments});
+
+  /// Creates a [TickProviderSpec] that dynamically chooses ticks based on the
+  /// extents of the data, limited to day increments.
+  ///
+  /// [increments] specify the number of millisecond increments that can be chosen from
+  /// when searching for the appropriate tick intervals.
+  @override
+  TickProvider<DateTime> createTickProvider(ChartContext context) {
+    return AutoAdjustingDateTimeTickProvider.createWith([
+      TimeRangeTickProviderImpl(MillisecondTimeStepper(context.dateTimeFactory,
+          allowedTickIncrements: increments))
+    ]);
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      other is DayTickProviderSpec && increments == other.increments;
+
+  @override
+  int get hashCode => increments?.hashCode ?? 0;
+}
+
 /// [TickProviderSpec] that sets up time ticks at the two end points of the axis
 /// range.
 @immutable
@@ -289,6 +402,8 @@ class BasicDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
 /// level.
 @immutable
 class AutoDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
+  final TimeFormatterSpec? milliSecond;
+  final TimeFormatterSpec? second;
   final TimeFormatterSpec? minute;
   final TimeFormatterSpec? hour;
   final TimeFormatterSpec? day;
@@ -302,11 +417,26 @@ class AutoDateTimeTickFormatterSpec implements DateTimeTickFormatterSpec {
   /// by specifying a level here it replaces the default for that particular
   /// granularity. This is useful for swapping out one or all of the formatters.
   const AutoDateTimeTickFormatterSpec(
-      {this.minute, this.hour, this.day, this.month, this.year});
+      {this.milliSecond,
+      this.second,
+      this.minute,
+      this.hour,
+      this.day,
+      this.month,
+      this.year});
 
   @override
   DateTimeTickFormatter createTickFormatter(ChartContext context) {
     final map = <int, TimeTickFormatter>{};
+
+    if (milliSecond != null) {
+      map[1] = _makeFormatter(milliSecond!, CalendarField.second, context);
+    }
+
+    if (second != null) {
+      map[DateTimeTickFormatter.SECOND] =
+          _makeFormatter(second!, CalendarField.minute, context);
+    }
 
     if (minute != null) {
       map[DateTimeTickFormatter.MINUTE] =

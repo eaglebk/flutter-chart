@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'package:example/time_series_chart/simple_precision_timestamps.dart';
 import 'package:flutter/material.dart';
 import '../gallery_scaffold.dart';
 import 'confidence_interval.dart';
@@ -31,6 +32,12 @@ List<GalleryScaffold> buildGallery() {
       title: 'Time Series Chart',
       subtitle: 'Simple single time series chart',
       childBuilder: () => new SimpleTimeSeriesChart.withRandomData(),
+    ),
+    new GalleryScaffold(
+      listTileIcon: new Icon(Icons.show_chart),
+      title: 'Time Series Chart',
+      subtitle: 'Simple single time series chart with ms time steps',
+      childBuilder: () => new SimplePrecisionTimeSeriesChart.withRandomData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.show_chart),
