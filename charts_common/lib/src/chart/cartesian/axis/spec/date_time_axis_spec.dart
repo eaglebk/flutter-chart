@@ -323,6 +323,7 @@ class TimeFormatterSpec {
   final String? format;
   final String? transitionFormat;
   final String? noonFormat;
+  // final String? postfix;
 
   /// Creates a formatter for a particular granularity of data.
   ///

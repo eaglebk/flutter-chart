@@ -49,29 +49,33 @@ class SimpleTimeSeriesChart extends StatelessWidget {
 
     final data = [
       new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 1), random.nextInt(100)),
+          new DateTime(2017, 9, 19, 0, 0, 0, 2), random.nextInt(100)),
+      new TimeSeriesSales(
+          new DateTime(2017, 9, 19, 0, 0, 1), random.nextInt(5)),
       new TimeSeriesSales(
           new DateTime(2017, 9, 19, 0, 0, 2), random.nextInt(100)),
       new TimeSeriesSales(
           new DateTime(2017, 9, 19, 0, 0, 3), random.nextInt(100)),
       new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 4), random.nextInt(100)),
+          new DateTime(2017, 9, 19, 0, 0, 4), random.nextInt(200)),
       new TimeSeriesSales(
           new DateTime(2017, 9, 19, 0, 0, 5), random.nextInt(100)),
       new TimeSeriesSales(
           new DateTime(2017, 9, 19, 0, 0, 6), random.nextInt(100)),
       new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 7), random.nextInt(100)),
+          new DateTime(2017, 9, 19, 0, 0, 7), random.nextInt(1000)),
       new TimeSeriesSales(
           new DateTime(2017, 9, 19, 0, 0, 8), random.nextInt(100)),
       new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 9), random.nextInt(100)),
+          new DateTime(2017, 9, 19, 0, 0, 9), random.nextInt(1000)),
+      new TimeSeriesSales(
+          new DateTime(2017, 9, 19, 0, 0, 10), random.nextInt(100)),
     ];
 
     return [
       new charts.Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => charts.ColorUtil.fromDartColor(Colors.red),
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: data,
@@ -88,15 +92,33 @@ class SimpleTimeSeriesChart extends StatelessWidget {
     return new charts.TimeSeriesChart(
       seriesList,
       animate: animate,
+
+      primaryMeasureAxis: new charts.NumericAxisSpec(
+          renderSpec: charts.GridlineRendererSpec(
+              lineStyle: charts.LineStyleSpec(
+        color: charts.ColorUtil.fromDartColor(Colors.black),
+        dashPattern: [10, 10],
+      ))),
+
       domainAxis: new charts.DateTimeAxisSpec(
+          viewport: charts.DateTimeExtents(
+              start: new DateTime(2017, 9, 19, 0, 0, 0, 2),
+              end: new DateTime(2017, 9, 19, 0, 0, 3)),
+          renderSpec: charts.GridlineRendererSpec(
+              lineStyle: charts.LineStyleSpec(
+            color: charts.ColorUtil.fromDartColor(Color(0xFFD8DDE6)),
+            thickness: 1,
+          )),
+          tickProviderSpec: charts.SecondTickProviderSpec(increments: [1]),
           tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
-              day: new charts.TimeFormatterSpec(
-                  format: 's', transitionFormat: 'ms'))),
+              second: new charts.TimeFormatterSpec(
+                  format: 's сек', transitionFormat: 's'))),
       // Optionally pass in a [DateTimeFactory] used by the chart. The factory
       // should create the same type of [DateTime] as the data provided. If none
       // specified, the default creates local date time.
       dateTimeFactory: const charts.LocalDateTimeFactory(),
-      behaviors: [charts.PanAndZoomBehavior()],
+
+      behaviors: [new charts.PanAndZoomBehavior()],
     );
   }
 

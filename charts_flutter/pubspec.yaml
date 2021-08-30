@@ -15,10 +15,8 @@ dependencies:
   intl: ^0.17.0
   logging: ^1.0.1
   meta: ^1.3.0
-  charts_common::
-    git:
-      url: git@github.com:eaglebk/flutter-chart.git
-      ref: hight_res_time
+  charts_common:
+    path: ../charts_common/
 
 dev_dependencies:
   mockito: ^5.0.14
