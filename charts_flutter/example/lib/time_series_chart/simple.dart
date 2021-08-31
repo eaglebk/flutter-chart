@@ -48,28 +48,13 @@ class SimpleTimeSeriesChart extends StatelessWidget {
     final random = new Random();
 
     final data = [
-      new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 0, 2), random.nextInt(100)),
-      new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 1), random.nextInt(5)),
-      new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 2), random.nextInt(100)),
-      new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 3), random.nextInt(100)),
-      new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 4), random.nextInt(200)),
-      new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 5), random.nextInt(100)),
-      new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 6), random.nextInt(100)),
-      new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 7), random.nextInt(1000)),
-      new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 8), random.nextInt(100)),
-      new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 9), random.nextInt(1000)),
-      new TimeSeriesSales(
-          new DateTime(2017, 9, 19, 0, 0, 10), random.nextInt(100)),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 15, 40, 0, 0), random.nextInt(100)),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 15, 40, 1, 0), random.nextInt(100)),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 15, 40, 2, 0), random.nextInt(100)),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 15, 40, 3, 0), random.nextInt(100)),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 15, 40, 4, 0), random.nextInt(60)),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 15, 40, 5, 0), random.nextInt(100)),
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 15, 40, 6, 0), random.nextInt(100)),
     ];
 
     return [
@@ -94,37 +79,46 @@ class SimpleTimeSeriesChart extends StatelessWidget {
       animate: animate,
 
       primaryMeasureAxis: new charts.NumericAxisSpec(
-          renderSpec: charts.GridlineRendererSpec(
-              lineStyle: charts.LineStyleSpec(
-        color: charts.ColorUtil.fromDartColor(Colors.black),
-        dashPattern: [10, 10],
-      ))),
+        viewport: charts.NumericExtents.fromValues([0, 100]),
+        // renderSpec: charts.GridlineRendererSpec(
+        //     lineStyle: charts.LineStyleSpec(
+        //   color: charts.ColorUtil.fromDartColor(Colors.black),
+        //   dashPattern: [10, 10],
+        // ))
+      ),
 
       domainAxis: new charts.DateTimeAxisSpec(
           viewport: charts.DateTimeExtents(
-              start: new DateTime(2017, 9, 19, 0, 0, 0, 2),
-              end: new DateTime(2017, 9, 19, 0, 0, 3)),
+              start: new DateTime(2017, 9, 19, 0, 0, 1), end: new DateTime(2017, 9, 19, 0, 0, 6)),
           renderSpec: charts.GridlineRendererSpec(
+              labelOffsetFromAxisPx: 20,
+              axisLineStyle: charts.LineStyleSpec(
+                color: charts.ColorUtil.fromDartColor(Colors.red),
+                thickness: 50,
+              ),
               lineStyle: charts.LineStyleSpec(
-            color: charts.ColorUtil.fromDartColor(Color(0xFFD8DDE6)),
-            thickness: 1,
-          )),
+                color: charts.ColorUtil.fromDartColor(Color(0xFFD8DDE6)),
+                thickness: 1,
+              )),
           tickProviderSpec: charts.SecondTickProviderSpec(increments: [1]),
           tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
-              second: new charts.TimeFormatterSpec(
-                  format: 's сек', transitionFormat: 's'))),
+              second: new charts.TimeFormatterSpec(format: 's сек', transitionFormat: 's'))),
       // Optionally pass in a [DateTimeFactory] used by the chart. The factory
       // should create the same type of [DateTime] as the data provided. If none
       // specified, the default creates local date time.
       dateTimeFactory: const charts.LocalDateTimeFactory(),
 
-      behaviors: [new charts.PanAndZoomBehavior()],
+      behaviors: [
+        new charts.PanAndZoomBehavior(),
+        new charts.SlidingViewport(),
+      ],
     );
   }
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
     final data = [
+      new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 0), 5),
       new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 1), 5),
       new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 2), 10),
       new TimeSeriesSales(new DateTime(2017, 9, 19, 0, 0, 3), 5),

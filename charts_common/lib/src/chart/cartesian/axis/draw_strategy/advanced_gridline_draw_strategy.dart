@@ -31,8 +31,8 @@ import 'small_tick_draw_strategy.dart' show SmallTickRendererSpec;
 import 'tick_draw_strategy.dart' show TickDrawStrategy;
 
 @immutable
-class GridlineRendererSpec<D> extends SmallTickRendererSpec<D> {
-  const GridlineRendererSpec({
+class AdvancedGridlineRendererSpec<D> extends SmallTickRendererSpec<D> {
+  const AdvancedGridlineRendererSpec({
     TextStyleSpec? labelStyle,
     LineStyleSpec? lineStyle,
     LineStyleSpec? axisLineStyle,
@@ -63,7 +63,7 @@ class GridlineRendererSpec<D> extends SmallTickRendererSpec<D> {
 
   @override
   TickDrawStrategy<D> createDrawStrategy(ChartContext context, GraphicsFactory graphicsFactory) =>
-      GridlineTickDrawStrategy<D>(context, graphicsFactory,
+      AdvancedGridlineTickDrawStrategy<D>(context, graphicsFactory,
           tickLengthPx: tickLengthPx,
           lineStyleSpec: lineStyle,
           labelStyleSpec: labelStyle,
@@ -81,18 +81,18 @@ class GridlineRendererSpec<D> extends SmallTickRendererSpec<D> {
   @override
   // ignore: hash_and_equals
   bool operator ==(Object other) {
-    return identical(this, other) || (other is GridlineRendererSpec && super == other);
+    return identical(this, other) || (other is AdvancedGridlineRendererSpec && super == other);
   }
 }
 
 /// Draws line across chart draw area for each tick.
 ///
 /// Extends [BaseTickDrawStrategy].
-class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
+class AdvancedGridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
   int tickLength;
   LineStyle lineStyle;
 
-  GridlineTickDrawStrategy(
+  AdvancedGridlineTickDrawStrategy(
     ChartContext chartContext,
     GraphicsFactory graphicsFactory, {
     int? tickLengthPx,
@@ -145,8 +145,8 @@ class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
         break;
       case AxisOrientation.bottom:
         final x = tickLocationPx;
-        lineStart = Point(x, drawAreaBounds.top - 10 + tickLength);
-        lineEnd = Point(x, axisBounds.top + 10);
+        lineStart = Point(x, drawAreaBounds.top + tickLength);
+        lineEnd = Point(x, axisBounds.top);
         break;
       case AxisOrientation.right:
         final y = tickLocationPx;
@@ -169,18 +169,6 @@ class GridlineTickDrawStrategy<D> extends BaseTickDrawStrategy<D> {
         }
         lineEnd = Point(drawAreaBounds.right, y);
         break;
-    }
-
-    for (var i = 0; i < 5; i++) {
-      final _lineStart = Point(lineStart.x, lineStart.y + 10);
-      final _lineEnd = Point(lineStart.x, lineStart.y + 10);
-      canvas.drawLine(
-        points: [lineStart, lineEnd],
-        dashPattern: lineStyle.dashPattern,
-        fill: lineStyle.color,
-        stroke: lineStyle.color,
-        strokeWidthPx: lineStyle.strokeWidth.toDouble(),
-      );
     }
 
     canvas.drawLine(

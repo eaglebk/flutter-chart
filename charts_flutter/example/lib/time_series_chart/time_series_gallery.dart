@@ -60,10 +60,8 @@ List<GalleryScaffold> buildGallery() {
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.show_chart),
       title: 'Range Annotation Margin Labels on Time Series Chart',
-      subtitle:
-          'Time series chart with range annotations with labels in margins',
-      childBuilder: () =>
-          new TimeSeriesRangeAnnotationMarginChart.withRandomData(),
+      subtitle: 'Time series chart with range annotations with labels in margins',
+      childBuilder: () => new TimeSeriesRangeAnnotationMarginChart.withRandomData(),
     ),
     new GalleryScaffold(
       listTileIcon: new Icon(Icons.show_chart),

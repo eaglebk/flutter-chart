@@ -48,18 +48,12 @@ class SimplePrecisionTimeSeriesChart extends StatelessWidget {
     final random = new Random();
 
     final data = [
-      new TimeSeriesSales(
-          new DateTime(2021, 3, 22, 15, 40, 0, 0, 0), random.nextInt(100)),
-      new TimeSeriesSales(
-          new DateTime(2021, 3, 22, 15, 40, 0, 1, 0), random.nextInt(100)),
-      new TimeSeriesSales(
-          new DateTime(2021, 3, 22, 15, 40, 0, 2, 0), random.nextInt(100)),
-      new TimeSeriesSales(
-          new DateTime(2021, 3, 22, 15, 40, 0, 3, 0), random.nextInt(100)),
-      new TimeSeriesSales(
-          new DateTime(2021, 3, 22, 15, 40, 0, 4, 0), random.nextInt(100)),
-      new TimeSeriesSales(
-          new DateTime(2021, 3, 22, 15, 40, 0, 5, 0), random.nextInt(100)),
+      new TimeSeriesSales(new DateTime(2021, 3, 22, 15, 40, 0, 0, 0), random.nextInt(100)),
+      new TimeSeriesSales(new DateTime(2021, 3, 22, 15, 40, 0, 1, 0), random.nextInt(100)),
+      new TimeSeriesSales(new DateTime(2021, 3, 22, 15, 40, 0, 2, 0), random.nextInt(100)),
+      new TimeSeriesSales(new DateTime(2021, 3, 22, 15, 40, 0, 3, 0), random.nextInt(100)),
+      new TimeSeriesSales(new DateTime(2021, 3, 22, 15, 40, 0, 4, 0), random.nextInt(100)),
+      new TimeSeriesSales(new DateTime(2021, 3, 22, 15, 40, 0, 5, 0), random.nextInt(100)),
     ];
 
     return [
@@ -79,10 +73,37 @@ class SimplePrecisionTimeSeriesChart extends StatelessWidget {
     return new charts.TimeSeriesChart(
       seriesList,
       animate: animate,
+      primaryMeasureAxis: new charts.NumericAxisSpec(
+          viewport: charts.NumericExtents.fromValues([0, 100]),
+          renderSpec: charts.GridlineRendererSpec(
+              lineStyle: charts.LineStyleSpec(
+            color: charts.ColorUtil.fromDartColor(Colors.red),
+          ))),
+
+      domainAxis: new charts.DateTimeAxisSpec(
+          viewport: charts.DateTimeExtents(
+              start: new DateTime(2021, 3, 22, 15, 40, 0, 0, 0),
+              end: new DateTime(2021, 3, 22, 15, 40, 0, 3, 0)),
+          renderSpec: charts.GridlineRendererSpec(
+              // axisLineStyle: charts.LineStyleSpec(
+              //   color: charts.ColorUtil.fromDartColor(Colors.red),
+              //   thickness: 10,
+              // ),
+              lineStyle: charts.LineStyleSpec(
+            color: charts.ColorUtil.fromDartColor(Color(0xFFD8DDE6)),
+            thickness: 1,
+          )),
+          tickProviderSpec: charts.MillisecondTickProviderSpec(increments: [1]),
+          tickFormatterSpec: new charts.AutoDateTimeTickFormatterSpec(
+              second: new charts.TimeFormatterSpec(format: 'ms сек', transitionFormat: 'ms'))),
       // Optionally pass in a [DateTimeFactory] used by the chart. The factory
       // should create the same type of [DateTime] as the data provided. If none
       // specified, the default creates local date time.
       dateTimeFactory: const charts.LocalDateTimeFactory(),
+      behaviors: [
+        new charts.PanAndZoomBehavior(),
+        new charts.SlidingViewport(),
+      ],
     );
   }
 
